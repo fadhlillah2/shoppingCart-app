@@ -17,6 +17,12 @@ function ready() {
     var input = quantityInputs[i];
     input.addEventListener("change", quantityChanged);
   }
+
+  var addToCartButtons = document.getElementsByClassName("shop-item-button");
+  for (var i = 0; i < addToCartButtons.length; i++) {
+    var button = addToCartButtons[i];
+    button.addEventListener("click", addToCartClicked);
+  }
 }
 
 function removeCartItem(event) {
@@ -31,6 +37,13 @@ function quantityChanged(event) {
     input.value = 1;
   }
   updateCartTotal();
+}
+
+function addToCartClicked(event) {
+  var button = event.target;
+  var shopItem = button.parentElement.parentElement;
+  var title = shopItem.getElementsByClassName("shop-item-title")[0].innerText;
+  console.log(title);
 }
 
 function updateCartTotal() {

@@ -47,12 +47,20 @@ function addToCartClicked(event) {
   var imageSrc = shopItem.getElementsByClassName("shop-item-image")[0].src;
   console.log(title, price, imageSrc);
   addItemToCart(title, price, imageSrc);
+  updateCartTotal();
 }
 
 function addItemToCart(title, price, imageSrc) {
   var cartRow = document.createElement("div");
   cartRow.classList.add("cart-row");
   var cartItems = document.getElementsByClassName("cart-items")[0];
+  var cartItemNames = cartItems.getElementsByClassName("cart-item-title");
+  for (i = 0; i < cartItemNames.length; i++) {
+    if (cartItemNames[i].innerText == title) {
+      alert("This item is already added to the cart");
+      return;
+    }
+  }
   var cartRowContents = `
   <div class="cart-item cart-column">
                         <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
@@ -65,6 +73,9 @@ function addItemToCart(title, price, imageSrc) {
                     </div>`;
   cartRow.innerHTML = cartRowContents;
   cartItems.append(cartRow);
+  cartRow
+    .getElementsByClassName("btn-danger")[0]
+    .addEventListener("click", removeCartItem);
 }
 
 function updateCartTotal() {
